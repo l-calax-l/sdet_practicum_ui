@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
+
 @pytest.fixture(scope="function")
 def driver():
     """
@@ -24,5 +25,3 @@ def driver():
 
     # Закрываем браузер после теста
     browser.quit()
-    
-    
