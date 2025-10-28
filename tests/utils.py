@@ -44,5 +44,5 @@ def find_customer_to_delete(customer_names: list[str]) -> str:
     # для которого разница между его длиной и средней — минимальна.
     closest_name = min(
         customer_names, key=lambda name: abs(len(name) - average_length)
-    )
+    )  # noqa: E501
     return closest_name

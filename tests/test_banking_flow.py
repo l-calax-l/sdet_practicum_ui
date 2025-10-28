@@ -34,7 +34,7 @@ def test_add_customer(driver, base_url):
     # --- Проверка результата ---
     manager_page.verify_customer_data_in_table(
         first_name, last_name, post_code
-    )
+    )  # noqa: E501
 
 
 @allure.title("TC-2: Сортировка клиентов по имени")
