@@ -5,6 +5,9 @@ __pycache__/
 dist/
 build/
 
+# Pytest cache
+.pytest_cache/
+
 # Virtual Environment
 venv/
 .venv/
