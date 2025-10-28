@@ -18,3 +18,6 @@ env/
 # Allure reports
 allure-results/
 allure-report/
+
+# Environment variables file
+.env
