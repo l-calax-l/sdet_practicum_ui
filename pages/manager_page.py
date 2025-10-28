@@ -20,6 +20,9 @@ class ManagerPageLocators:
     LAST_NAME_CELL = (By.CSS_SELECTOR, "tbody tr td:nth-child(2)")
     POST_CODE_CELL = (By.CSS_SELECTOR, "tbody tr td:nth-child(3)")
 
+    # --- Локаторы для сортировки ---
+    FIRST_NAME_HEADER = (By.CSS_SELECTOR, "a[ng-click*='fName']")
+
 class ManagerPage(BasePage):
     @allure.step("Нажать на кнопку 'Add Customer'")
     def click_add_customer_button(self):
@@ -61,3 +64,17 @@ class ManagerPage(BasePage):
             assert last_name_cell_text == last_name
         with allure.step(f"Проверка индекса: ожидаем '{post_code}', в таблице '{post_code_cell_text}'"):
             assert post_code_cell_text == post_code
+    
+    @allure.step("Нажать на заголовок 'First Name' для сортировки")
+    def sort_by_first_name(self):
+        self.find_element(ManagerPageLocators.FIRST_NAME_HEADER).click()
+
+    @allure.step("Получить список имен клиентов из таблицы")
+    def get_customer_first_names(self):
+        # Ждем, пока таблица загрузится
+        self.find_element(ManagerPageLocators.CUSTOMERS_TABLE_BODY)
+        # Находим все ячейки с именами
+        name_cells = self.find_elements(ManagerPageLocators.FIRST_NAME_CELL)
+        # Возвращаем список текстовых значений этих ячеек
+        return [cell.text for cell in name_cells]
+    
