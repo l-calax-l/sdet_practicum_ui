@@ -5,3 +5,4 @@ allure-pytest
 python-dotenv
 black
 flake8
+pytest-xdist
