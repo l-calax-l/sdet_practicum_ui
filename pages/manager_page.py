@@ -78,3 +78,11 @@ class ManagerPage(BasePage):
         # Возвращаем список текстовых значений этих ячеек
         return [cell.text for cell in name_cells]
     
+    @allure.step("Удалить клиента с именем: {customer_name}")
+    def delete_customer(self, customer_name):
+        # Находим строку по тексту имени, поднимаемся к родителю (tr)
+        customer_row = self.find_element((By.XPATH, f"//td[text()='{customer_name}']/.."))
+        # Внутри строки ищем кнопку Delete
+        delete_btn = customer_row.find_element(By.CSS_SELECTOR, "button[ng-click^='deleteCust']")
+        delete_btn.click()
+    

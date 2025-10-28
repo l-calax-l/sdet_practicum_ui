@@ -31,3 +31,13 @@ def generate_customer_data():
         first_name += alphabet[letter_index]
 
     return first_name, post_code
+
+def find_customer_to_delete(customer_names: list[str]) -> str:
+    """Находит имя, длина которого ближе всего к средней арифметической."""
+    if not customer_names:
+        return ""
+    name_lengths = [len(name) for name in customer_names]
+    average_length = sum(name_lengths) / len(name_lengths)
+    
+    closest_name = min(customer_names, key=lambda name: abs(len(name) - average_length))
+    return closest_name

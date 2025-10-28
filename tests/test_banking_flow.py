@@ -1,6 +1,7 @@
 import allure
 from pages.manager_page import ManagerPage
 from tests.utils import generate_customer_data
+from tests.utils import find_customer_to_delete
 
 @allure.title("TC-1: Успешное создание нового клиента")
 @allure.description("Проверка полного цикла создания клиента с помощью Page Object.")
@@ -57,4 +58,23 @@ def test_sort_customers_by_first_name(driver, base_url):
         sorted_names_asc = manager_page.get_customer_first_names()
         assert sorted_names_asc == sorted(original_names), "Сортировка по возрастанию не работает"
 
+@allure.title("TC-3: Удаление клиента")
+@allure.feature("Клиенты")
+@allure.story("Удаление")
+def test_delete_customer(driver, base_url):
+    manager_page = ManagerPage(driver, base_url)
+    
+    with allure.step("Открыть страницу и перейти на вкладку 'Customers'"):
+        manager_page.open()
+        manager_page.go_to_customers_tab()
+
+    with allure.step("Найти клиента для удаления"):
+        all_names = manager_page.get_customer_first_names()
+        assert len(all_names) > 0, "В таблице нет клиентов для удаления"
+        name_to_delete = find_customer_to_delete(all_names)
+        
+    with allure.step(f"Удалить клиента '{name_to_delete}' и проверить результат"):
+        manager_page.delete_customer(name_to_delete)
+        remaining_names = manager_page.get_customer_first_names()
+        assert name_to_delete not in remaining_names, f"Клиент '{name_to_delete}' не был удален из таблицы"
     
