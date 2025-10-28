@@ -22,7 +22,7 @@ def generate_customer_data():
 
     # Разбиваем Post Code на 5 частей по 2 цифры
     for i in range(0, 10, 2):
-        two_digit_str = post_code[i : i + 2]
+        two_digit_str = post_code[i : i + 2]  # noqa: E203
         number = int(two_digit_str)
 
         # Находим остаток от деления на 26, чтобы получить индекс от 0 до 25.
@@ -32,12 +32,17 @@ def generate_customer_data():
 
     return first_name, post_code
 
+
 def find_customer_to_delete(customer_names: list[str]) -> str:
     """Находит имя, длина которого ближе всего к средней арифметической."""
     if not customer_names:
         return ""
     name_lengths = [len(name) for name in customer_names]
     average_length = sum(name_lengths) / len(name_lengths)
-    
-    closest_name = min(customer_names, key=lambda name: abs(len(name) - average_length))
+
+    # Используем key=lambda для функции min, чтобы найти имя,
+    # для которого разница между его длиной и средней — минимальна.
+    closest_name = min(
+        customer_names, key=lambda name: abs(len(name) - average_length)
+    )
     return closest_name

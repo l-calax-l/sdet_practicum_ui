@@ -2,10 +2,10 @@ import os
 import pytest
 from dotenv import load_dotenv
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
 
 # Загружаем переменные из .env файла в окружение проекта
 load_dotenv()
+
 
 @pytest.fixture(scope="session")
 def base_url():
@@ -18,6 +18,7 @@ def base_url():
         # Если переменная не найдена, тесты должны упасть с понятной ошибкой
         pytest.fail("Переменная окружения BASE_URL не задана в .env файле")
     return url
+
 
 @pytest.fixture(scope="function")
 def driver():
