@@ -29,10 +29,11 @@ def driver():
     # options.add_argument("--headless") # Раскомментировать для запуска в CI
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--no-proxy-server")
     options.add_argument("--window-size=1920,1080")
 
     browser = webdriver.Chrome(options=options)
-    
+
     # 'return' с продолжением
     yield browser
 
