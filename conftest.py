@@ -1,8 +1,23 @@
+import os
 import pytest
+from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
-from webdriver_manager.chrome import ChromeDriverManager
 
+# Загружаем переменные из .env файла в окружение проекта
+load_dotenv()
+
+@pytest.fixture(scope="session")
+def base_url():
+    """
+    Фикстура, которая читает и возвращает базовый URL для тестов
+    из переменной окружения BASE_URL.
+    """
+    url = os.getenv("BASE_URL")
+    if not url:
+        # Если переменная не найдена, тесты должны упасть с понятной ошибкой
+        pytest.fail("Переменная окружения BASE_URL не задана в .env файле")
+    return url
 
 @pytest.fixture(scope="function")
 def driver():
@@ -16,10 +31,8 @@ def driver():
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--window-size=1920,1080")
 
-    # Автоматически скачиваем и устанавливаем подходящий ChromeDriver
-    service = ChromeService(ChromeDriverManager().install())
-    browser = webdriver.Chrome(service=service, options=options)
-
+    browser = webdriver.Chrome(options=options)
+    
     # 'return' с продолжением
     yield browser
 
