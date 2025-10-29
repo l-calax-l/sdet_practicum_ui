@@ -29,6 +29,8 @@ jobs:
         uses: browser-actions/setup-chrome@latest
         
       - name: Run tests with Allure
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
         # Тесты на CI всегда должны работать в headless-режиме!!!
         run: pytest --alluredir=allure-results
 
