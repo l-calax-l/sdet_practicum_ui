@@ -39,7 +39,7 @@
     ```shell
     copy .env.example .env`
     ```
-    
+
 3.  **(Рекомендуется) Создайте и активируйте виртуальное окружение:**
     ```shell
     py -m venv venv
@@ -54,12 +54,12 @@
 
 *   **Стандартный запуск (в один поток):**
     ```shell
-    py -m pytest
+    py -m pytest --alluredir=allure-results
     ```
 
 *   **Параллельный запуск (например, в 3 потока):**
     ```shell
-    py -m pytest -n 3
+    py -m pytest -n 3 --alluredir=allure-results
     ```
 
 #### Просмотр отчета Allure
