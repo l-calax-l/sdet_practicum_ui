@@ -31,11 +31,11 @@ jobs:
       - name: Run tests with Allure
         env:
           BASE_URL: ${{ secrets.BASE_URL }}
-        # Тесты на CI всегда должны работать в headless-режиме!!!
+          HEADLESS: "true"
         run: pytest --alluredir=allure-results
 
       - name: Store Allure results
-        if: always() # Выполнять этот шаг всегда, даже если тесты упали
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
