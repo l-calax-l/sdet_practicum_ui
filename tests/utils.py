@@ -14,7 +14,7 @@ def generate_customer_data(name_length: int = 5):
     alphabet = string.ascii_lowercase
 
     for i in range(0, post_code_length, 2):
-        two_digit_str = post_code[i:i+2]
+        two_digit_str = post_code[i : i + 2]
         number = int(two_digit_str)
         letter_index = number % 26
         first_name += alphabet[letter_index]
@@ -31,7 +31,5 @@ def find_customer_to_delete(customer_names: list[str]) -> str:
 
     # Используем key=lambda для функции min, чтобы найти имя,
     # для которого разница между его длиной и средней — минимальна.
-    closest_name = min(
-        customer_names, key=lambda name: abs(len(name) - average_length)
-    )  # noqa: E501
+    closest_name = min(customer_names, key=lambda name: abs(len(name) - average_length))
     return closest_name

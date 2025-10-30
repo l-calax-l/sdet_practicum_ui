@@ -43,11 +43,12 @@ def driver():
 
     browser.quit()
 
+
 @pytest.fixture(scope="function")
 def create_three_customers(driver, base_url):
     """
     Создает 3 разных клиента с именами РАЗНОЙ длины (3, 5, 7)
-    для тестов, которым нужны данные для анализа.
+    для тестов сортировки и удаления.
     """
     name_lengths = [3, 5, 7]
 
@@ -55,9 +56,11 @@ def create_three_customers(driver, base_url):
         manager_page = ManagerPage(driver, base_url)
         if driver.current_url != manager_page.url:
             manager_page.open()
-            
+
         manager_page.click_add_customer_button()
         first_name, post_code = generate_customer_data(name_length=length)
-        manager_page.fill_customer_form(first_name, DEFAULT_LAST_NAME, post_code)
+        manager_page.fill_customer_form(
+            first_name, DEFAULT_LAST_NAME, post_code
+        )  # noqa: E501
         manager_page.submit_customer_form()
         manager_page.accept_alert()
