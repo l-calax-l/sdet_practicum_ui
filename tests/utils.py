@@ -13,19 +13,15 @@ def generate_customer_data():
 
     :return: first_name, post_code
     """
-    # 1. Генерируем Post Code
     post_code = "".join(random.choices(string.digits, k=10))
 
-    # 2. Генерируем First Name на основе Post Code
     first_name = ""
     alphabet = string.ascii_lowercase
 
-    # Разбиваем Post Code на 5 частей по 2 цифры
     for i in range(0, 10, 2):
         two_digit_str = post_code[i : i + 2]  # noqa: E203
         number = int(two_digit_str)
 
-        # Находим остаток от деления на 26, чтобы получить индекс от 0 до 25.
         letter_index = number % 26
 
         first_name += alphabet[letter_index]
