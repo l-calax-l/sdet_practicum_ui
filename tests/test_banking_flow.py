@@ -9,14 +9,10 @@ from tests.utils import find_customer_to_delete
 @allure.feature("Клиенты")
 @allure.story("Создание клиента")
 def test_add_customer(driver, base_url):
-    # --- Инициализация Page Object ---
     manager_page = ManagerPage(driver, base_url)
 
-    # --- Предусловие ---
-    with allure.step("Открыть главную страницу менеджера"):
-        manager_page.open()
+    manager_page.open()
 
-    # --- Шаги теста ---
     manager_page.click_add_customer_button()
 
     first_name, post_code = generate_customer_data()
@@ -31,7 +27,6 @@ def test_add_customer(driver, base_url):
     manager_page.go_to_customers_tab()
     manager_page.find_customer_by_name(first_name)
 
-    # --- Проверка результата ---
     manager_page.verify_customer_data_in_table(
         first_name, last_name, post_code
     )  # noqa: E501
@@ -43,9 +38,8 @@ def test_add_customer(driver, base_url):
 def test_sort_customers_by_first_name(driver, base_url):
     manager_page = ManagerPage(driver, base_url)
 
-    with allure.step("Открыть страницу и перейти на вкладку 'Customers'"):
-        manager_page.open()
-        manager_page.go_to_customers_tab()
+    manager_page.open()
+    manager_page.go_to_customers_tab()
 
     with allure.step("Получить оригинальный список имен"):
         original_names = manager_page.get_customer_first_names()
@@ -72,10 +66,9 @@ def test_sort_customers_by_first_name(driver, base_url):
 @allure.story("Удаление")
 def test_delete_customer(driver, base_url):
     manager_page = ManagerPage(driver, base_url)
-
-    with allure.step("Открыть страницу и перейти на вкладку 'Customers'"):
-        manager_page.open()
-        manager_page.go_to_customers_tab()
+    
+    manager_page.open()
+    manager_page.go_to_customers_tab()
 
     with allure.step("Найти клиента для удаления"):
         all_names = manager_page.get_customer_first_names()
