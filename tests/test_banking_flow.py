@@ -1,4 +1,5 @@
 import allure
+from settings import DEFAULT_LAST_NAME
 from pages.manager_page import ManagerPage
 from tests.utils import generate_customer_data
 from tests.utils import find_customer_to_delete
@@ -16,7 +17,7 @@ def test_add_customer(driver, base_url):
     manager_page.click_add_customer_button()
 
     first_name, post_code = generate_customer_data()
-    last_name = "Testov"
+    last_name = DEFAULT_LAST_NAME
 
     manager_page.fill_customer_form(first_name, last_name, post_code)
     manager_page.submit_customer_form()
