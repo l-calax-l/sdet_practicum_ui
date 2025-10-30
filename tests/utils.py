@@ -2,31 +2,24 @@ import random
 import string
 
 
-def generate_customer_data():
+def generate_customer_data(name_length: int = 5):
     """
-    Генерирует тестовые данные для нового клиента согласно заданию.
-
-    Алгоритм:
-    1. Создается 10-значный Post Code.
-    2. Индекс разбивается на 5 двузначных чисел.
-    3. Каждое число преобразуется в букву английского алфавита.
-
-    :return: first_name, post_code
+    Генерирует тестовые данные для нового клиента.
+    Имя генерируется заданной длины.
     """
-    post_code = "".join(random.choices(string.digits, k=10))
+    post_code_length = name_length * 2
+    post_code = "".join(random.choices(string.digits, k=post_code_length))
 
     first_name = ""
     alphabet = string.ascii_lowercase
 
-    for i in range(0, 10, 2):
-        two_digit_str = post_code[i : i + 2]  # noqa: E203
+    for i in range(0, post_code_length, 2):
+        two_digit_str = post_code[i:i+2]
         number = int(two_digit_str)
-
         letter_index = number % 26
-
         first_name += alphabet[letter_index]
 
-    return first_name, post_code
+    return first_name.capitalize(), post_code
 
 
 def find_customer_to_delete(customer_names: list[str]) -> str:
