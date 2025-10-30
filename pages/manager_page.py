@@ -28,7 +28,11 @@ class ManagerPage(BasePage):
         self.find_element(ManagerPageLocators.POST_CODE_INPUT).send_keys(
             post_code
         )  # noqa: E501
+
+    @allure.step("Нажать 'Add Customer' для отправки формы")
+    def submit_customer_form(self):
         self.find_element(ManagerPageLocators.SUBMIT_CUSTOMER_BUTTON).click()
+
 
     @allure.step("Принять alert после добавления клиента")
     def accept_alert(self):
@@ -46,7 +50,6 @@ class ManagerPage(BasePage):
         self.find_element(ManagerPageLocators.SEARCH_INPUT).send_keys(
             first_name
         )  # noqa: E501
-        # Ожидаем, что таблица отфильтруется и будет видна
         self.find_element(ManagerPageLocators.CUSTOMERS_TABLE)
 
     @allure.step("Получить данные клиента из первой строки таблицы")
@@ -72,7 +75,6 @@ class ManagerPage(BasePage):
 
     @allure.step("Получить список имен клиентов из таблицы")
     def get_customer_first_names(self):
-        # Ожидаем, что таблица будет видна
         self.find_element(ManagerPageLocators.CUSTOMERS_TABLE)
         name_cells = self.find_elements(
             ManagerPageLocators.ALL_FIRST_NAME_CELLS
@@ -81,11 +83,9 @@ class ManagerPage(BasePage):
 
     @allure.step("Удалить клиента с именем: {customer_name}")
     def delete_customer(self, customer_name):
-        # Используем динамический локатор
         customer_row = self.find_element(
             ManagerPageLocators.customer_row_by_text(customer_name)
         )
-        # Внутри строки ищем кнопку Delete
         delete_btn = customer_row.find_element(
             By.CSS_SELECTOR, "button[ng-click^='deleteCust']"
         )

@@ -19,7 +19,8 @@ def test_add_customer(driver, base_url):
     last_name = "Testov"
 
     manager_page.fill_customer_form(first_name, last_name, post_code)
-
+    manager_page.submit_customer_form()
+    
     alert_text = manager_page.accept_alert()
     with allure.step("Проверка текста в alert"):
         assert "Customer added successfully" in alert_text
