@@ -5,6 +5,9 @@ __pycache__/
 dist/
 build/
 
+# Pytest cache
+.pytest_cache/
+
 # Virtual Environment
 venv/
 .venv/
@@ -18,3 +21,6 @@ env/
 # Allure reports
 allure-results/
 allure-report/
+
+# Environment variables file
+.env
