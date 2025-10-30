@@ -5,6 +5,11 @@ from .locators import ManagerPageLocators
 
 
 class ManagerPage(BasePage):
+    path = "/angularJs-protractor/BankingProject/#/manager"
+    
+    def __init__(self, driver, base_url):
+        super().__init__(driver, base_url, self.path)
+
     @allure.step("Нажать на кнопку 'Add Customer'")
     def click_add_customer_button(self):
         self.find_element(ManagerPageLocators.ADD_CUSTOMER_BUTTON).click()
@@ -98,3 +103,4 @@ class ManagerPage(BasePage):
             By.CSS_SELECTOR, "button[ng-click^='deleteCust']"
         )
         delete_btn.click()
+        

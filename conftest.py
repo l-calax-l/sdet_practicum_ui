@@ -3,7 +3,6 @@ import pytest
 from dotenv import load_dotenv
 from selenium import webdriver
 
-# Загружаем переменные из .env файла в окружение проекта
 load_dotenv()
 
 
@@ -15,7 +14,6 @@ def base_url():
     """
     url = os.getenv("BASE_URL")
     if not url:
-        # Если переменная не найдена, тесты должны упасть с понятной ошибкой
         pytest.fail("Переменная окружения BASE_URL не задана в .env файле")
     return url
 
@@ -27,7 +25,7 @@ def driver():
     Автоматически управляет версией ChromeDriver.
     """
     options = webdriver.ChromeOptions()
-    # options.add_argument("--headless")  # Раскомментировать для запуска в CI
+    options.add_argument("--headless")  # Раскомментировать для запуска в CI
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--no-proxy-server")
@@ -35,8 +33,6 @@ def driver():
 
     browser = webdriver.Chrome(options=options)
 
-    # 'return' с продолжением
     yield browser
 
-    # Закрываем браузер после теста
     browser.quit()
