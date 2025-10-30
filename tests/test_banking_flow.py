@@ -27,9 +27,12 @@ def test_add_customer(driver, base_url):
     manager_page.go_to_customers_tab()
     manager_page.find_customer_by_name(first_name)
 
-    manager_page.verify_customer_data_in_table(
-        first_name, last_name, post_code
-    )  # noqa: E501
+    with allure.step("Проверить, что данные клиента в таблице соответствуют ожидаемым"):
+        customer_data = manager_page.get_customer_data_from_row()
+
+        assert customer_data["first_name"] == first_name
+        assert customer_data["last_name"] == last_name
+        assert customer_data["post_code"] == post_code
 
 
 @allure.title("TC-2: Сортировка клиентов по имени")

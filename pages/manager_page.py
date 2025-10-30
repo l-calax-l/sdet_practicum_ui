@@ -49,36 +49,23 @@ class ManagerPage(BasePage):
         # Ожидаем, что таблица отфильтруется и будет видна
         self.find_element(ManagerPageLocators.CUSTOMERS_TABLE)
 
-    @allure.step("Проверить данные клиента в таблице")
-    def verify_customer_data_in_table(self, first_name, last_name, post_code):
-        first_name_cell_text = self.find_element(
+    @allure.step("Получить данные клиента из первой строки таблицы")
+    def get_customer_data_from_row(self):
+        first_name = self.find_element(
             ManagerPageLocators.ALL_FIRST_NAME_CELLS
         ).text
-        last_name_cell_text = self.find_element(
+        last_name = self.find_element(
             ManagerPageLocators.ALL_LAST_NAME_CELLS
         ).text
-        post_code_cell_text = self.find_element(
+        post_code = self.find_element(
             ManagerPageLocators.ALL_POST_CODE_CELLS
         ).text
-
-        with allure.step(
-            f"Проверка имени: ожидаем '{first_name}', "
-            f"в таблице '{first_name_cell_text}'"
-        ):
-            assert first_name_cell_text == first_name
-
-        with allure.step(
-            f"Проверка фамилии: ожидаем '{last_name}', "
-            f"в таблице '{last_name_cell_text}'"
-        ):
-            assert last_name_cell_text == last_name
-
-        with allure.step(
-            f"Проверка индекса: ожидаем '{post_code}', "
-            f"в таблице '{post_code_cell_text}'"
-        ):
-            assert post_code_cell_text == post_code
-
+        return {
+            "first_name": first_name,
+            "last_name": last_name,
+            "post_code": post_code,
+        }
+    
     @allure.step("Нажать на заголовок 'First Name' для сортировки")
     def sort_by_first_name(self):
         self.find_element(ManagerPageLocators.FIRST_NAME_HEADER).click()
@@ -103,4 +90,3 @@ class ManagerPage(BasePage):
             By.CSS_SELECTOR, "button[ng-click^='deleteCust']"
         )
         delete_btn.click()
-        
