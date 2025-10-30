@@ -2,6 +2,9 @@ import os
 import pytest
 from dotenv import load_dotenv
 from selenium import webdriver
+from settings import DEFAULT_LAST_NAME
+from pages.manager_page import ManagerPage
+from tests.utils import generate_customer_data
 
 load_dotenv()
 
@@ -28,7 +31,7 @@ def driver():
 
     if os.getenv("HEADLESS") == "true":
         options.add_argument("--headless")
-        
+
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--no-proxy-server")
@@ -39,3 +42,22 @@ def driver():
     yield browser
 
     browser.quit()
+
+@pytest.fixture(scope="function")
+def create_three_customers(driver, base_url):
+    """
+    Создает 3 разных клиента с именами РАЗНОЙ длины (3, 5, 7)
+    для тестов, которым нужны данные для анализа.
+    """
+    name_lengths = [3, 5, 7]
+
+    for length in name_lengths:
+        manager_page = ManagerPage(driver, base_url)
+        if driver.current_url != manager_page.url:
+            manager_page.open()
+            
+        manager_page.click_add_customer_button()
+        first_name, post_code = generate_customer_data(name_length=length)
+        manager_page.fill_customer_form(first_name, DEFAULT_LAST_NAME, post_code)
+        manager_page.submit_customer_form()
+        manager_page.accept_alert()
