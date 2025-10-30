@@ -22,7 +22,7 @@ def test_add_customer(driver, base_url):
 
     manager_page.fill_customer_form(first_name, last_name, post_code)
     manager_page.submit_customer_form()
-    
+
     alert_text = manager_page.accept_alert()
     with allure.step("Проверка текста в alert"):
         assert "Customer added successfully" in alert_text
@@ -48,12 +48,12 @@ def test_sort_customers_by_first_name(driver, base_url):
     Фикстура 'create_three_customers' подготавливает 3 новых клиента.
     """
     manager_page = ManagerPage(driver, base_url)
-    
+
     with allure.step("Открыть вкладку 'Customers'"):
         manager_page.go_to_customers_tab()
 
     original_names = manager_page.get_customer_first_names()
-    
+
     with allure.step("Отсортировать по убыванию (Z-A) и проверить"):
         manager_page.sort_by_first_name()
         sorted_names_desc = manager_page.get_customer_first_names()
@@ -67,6 +67,7 @@ def test_sort_customers_by_first_name(driver, base_url):
         assert sorted_names_asc == sorted(
             original_names
         ), "Сортировка по возрастанию не работает"
+
 
 @allure.title("TC-3: Удаление клиента по алгоритму")
 @allure.feature("Клиенты")
@@ -85,13 +86,19 @@ def test_delete_customer(driver, base_url):
 
     with allure.step("Найти клиента для удаления по алгоритму"):
         all_names = manager_page.get_customer_first_names()
-        
+
         name_to_delete = find_customer_to_delete(all_names)
-        
-    with allure.step(f"Удалить клиента '{name_to_delete}' и проверить результат"):
+
+    with allure.step(
+        f"Удалить клиента '{name_to_delete}' и проверить результат"
+    ):  # noqa: E501
         manager_page.delete_customer(name_to_delete)
-        
+
         remaining_names = manager_page.get_customer_first_names()
-        
-        assert name_to_delete not in remaining_names, f"Клиент '{name_to_delete}' все еще в таблице"
-        assert len(remaining_names) == len(all_names) - 1, "Количество клиентов не уменьшилось на 1"
+
+        assert (
+            name_to_delete not in remaining_names
+        ), f"Клиент '{name_to_delete}' все еще в таблице"
+        assert (
+            len(remaining_names) == len(all_names) - 1
+        ), "Количество клиентов не уменьшилось на 1"

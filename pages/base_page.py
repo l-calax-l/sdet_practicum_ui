@@ -5,7 +5,7 @@ import allure
 
 
 class BasePage:
-    
+
     def __init__(self, driver, base_url, path):
         self.driver = driver
         self.base_url = base_url
@@ -19,7 +19,7 @@ class BasePage:
         allure.attach(
             self.url,
             name=f"Открыт URL: {self.path}",
-            attachment_type=allure.attachment_type.URI_LIST
+            attachment_type=allure.attachment_type.URI_LIST,
         )
 
     def find_element(self, locator, time=DEFAULT_TIMEOUT):
@@ -35,4 +35,3 @@ class BasePage:
             EC.visibility_of_all_elements_located(locator),
             message=f"Не удалось найти элементы по локатору {locator}",
         )
-    

@@ -22,7 +22,6 @@ class ManagerPageLocators:
     ALL_LAST_NAME_CELLS = (By.CSS_SELECTOR, "tbody tr td:nth-child(2)")
     ALL_POST_CODE_CELLS = (By.CSS_SELECTOR, "tbody tr td:nth-child(3)")
 
-
     @staticmethod
     def customer_row_by_text(text):
         """Возвращает локатор для строки таблицы по тексту внутри нее."""
