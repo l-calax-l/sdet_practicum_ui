@@ -10,6 +10,12 @@ class ManagerPage(BasePage):
     def __init__(self, driver, base_url):
         super().__init__(driver, base_url, self.path)
 
+    @allure.step("Открыть страницу менеджера и дождаться загрузки")
+    def open_and_wait(self):
+        super().open()
+        self.find_element(ManagerPageLocators.ADD_CUSTOMER_BUTTON)
+        return self
+    
     @allure.step("Нажать на кнопку 'Add Customer'")
     def click_add_customer_button(self):
         self.find_element(ManagerPageLocators.ADD_CUSTOMER_BUTTON).click()

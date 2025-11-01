@@ -2,8 +2,8 @@ import pytest
 import allure
 from settings import DEFAULT_LAST_NAME
 from pages.manager_page import ManagerPage
-from tests.utils import generate_customer_data
-from tests.utils import find_customer_to_delete
+from helpers.utils import generate_customer_data
+from helpers.utils import find_customer_to_delete
 
 
 @allure.title("TC-1: Успешное создание нового клиента")
@@ -13,7 +13,7 @@ from tests.utils import find_customer_to_delete
 def test_add_customer(driver, base_url):
     manager_page = ManagerPage(driver, base_url)
 
-    manager_page.open()
+    manager_page.open_and_wait()
 
     manager_page.click_add_customer_button()
 
@@ -49,8 +49,9 @@ def test_sort_customers_by_first_name(driver, base_url):
     """
     manager_page = ManagerPage(driver, base_url)
 
-    with allure.step("Открыть вкладку 'Customers'"):
-        manager_page.go_to_customers_tab()
+    manager_page.open_and_wait()
+
+    manager_page.go_to_customers_tab()
 
     original_names = manager_page.get_customer_first_names()
 
@@ -81,8 +82,9 @@ def test_delete_customer(driver, base_url):
     """
     manager_page = ManagerPage(driver, base_url)
 
-    with allure.step("Открыть вкладку 'Customers'"):
-        manager_page.go_to_customers_tab()
+    manager_page.open_and_wait()
+    
+    manager_page.go_to_customers_tab()
 
     with allure.step("Найти клиента для удаления по алгоритму"):
         all_names = manager_page.get_customer_first_names()

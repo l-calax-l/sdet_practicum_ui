@@ -14,13 +14,8 @@ class BasePage:
 
     @allure.step("Открыть страницу")
     def open(self):
-        """Открывает страницу и ждет ее базовой загрузки."""
+        """Открывает страницу."""
         self.driver.get(self.url)
-        WebDriverWait(self.driver, DEFAULT_TIMEOUT).until(
-            EC.visibility_of_element_located(
-                (By.CSS_SELECTOR, "button[ng-click='addCust()']")
-            )
-        )
 
     def find_element(self, locator, time=DEFAULT_TIMEOUT):
         """Находит один элемент, ожидая его видимости."""

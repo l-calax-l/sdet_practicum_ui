@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from selenium import webdriver
 from settings import DEFAULT_LAST_NAME
 from pages.manager_page import ManagerPage
-from tests.utils import generate_customer_data
+from helpers.utils import generate_customer_data
 
 load_dotenv()
 
