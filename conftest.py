@@ -29,7 +29,7 @@ def driver():
     """
     options = webdriver.ChromeOptions()
 
-    if os.getenv("HEADLESS") == "true":
+    if os.getenv("HEADLESS").lower() == "true":
         options.add_argument("--headless")
 
     options.add_argument("--no-sandbox")

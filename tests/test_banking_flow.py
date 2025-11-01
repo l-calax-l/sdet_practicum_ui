@@ -33,20 +33,30 @@ def test_add_customer(driver, base_url):
     with allure.step("Проверить, что данные клиента в таблице соответствуют ожидаемым"):
         customer_data = manager_page.get_customer_data_from_row()
 
-        assert customer_data["first_name"] == first_name
-        assert customer_data["last_name"] == last_name
-        assert customer_data["post_code"] == post_code
+        assert customer_data["first_name"] == first_name, (
+            f"Имя клиента не совпадает. Ожидалось: '{first_name}', "
+            f"в таблице: '{customer_data['first_name']}'"
+        )
+        assert customer_data["last_name"] == last_name, (
+            f"Фамилия клиента не совпадает. Ожидалось: '{last_name}', "
+            f"в таблице: '{customer_data['last_name']}'"
+        )
+        assert customer_data["post_code"] == post_code, (
+            f"Почтовый индекс не совпадает. Ожидалось: '{post_code}', "
+            f"в таблице: '{customer_data['post_code']}'"
+        )
 
 
 @allure.title("TC-2: Сортировка клиентов по имени")
+@allure.description(
+    "Проверка сортировки клиентов по имени (A-Z и Z-A). "
+    "Предусловие: создаются 3 новых клиента."
+)
 @allure.feature("Клиенты")
 @allure.story("Сортировка")
 @pytest.mark.usefixtures("create_three_customers")
 def test_sort_customers_by_first_name(driver, base_url):
-    """
-    Проверяет корректность сортировки на наборе свежесозданных данных.
-    Фикстура 'create_three_customers' подготавливает 3 новых клиента.
-    """
+
     manager_page = ManagerPage(driver, base_url)
 
     manager_page.open_and_wait()
@@ -71,15 +81,15 @@ def test_sort_customers_by_first_name(driver, base_url):
 
 
 @allure.title("TC-3: Удаление клиента по алгоритму")
+@allure.description(
+    "Проверка удаления клиента по алгоритму (длина имени, ближайшая к средней). "
+    "Предусловие: создаются 3 новых клиента."
+)
 @allure.feature("Клиенты")
 @allure.story("Удаление")
 @pytest.mark.usefixtures("create_three_customers")
 def test_delete_customer(driver, base_url):
-    """
-    Проверяет удаление клиента, имя которого имеет длину,
-    ближайшую к средней арифметической длине всех имен.
-    Фикстура 'create_three_customers' подготавливает 3 новых клиента.
-    """
+
     manager_page = ManagerPage(driver, base_url)
 
     manager_page.open_and_wait()
