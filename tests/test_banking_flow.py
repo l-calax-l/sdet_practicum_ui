@@ -93,7 +93,7 @@ def test_delete_customer(driver, base_url):
     manager_page = ManagerPage(driver, base_url)
 
     manager_page.open_and_wait()
-    
+
     manager_page.go_to_customers_tab()
 
     with allure.step("Найти клиента для удаления по алгоритму"):

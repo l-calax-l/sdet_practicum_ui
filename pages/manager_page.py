@@ -15,7 +15,7 @@ class ManagerPage(BasePage):
         super().open()
         self.find_element(ManagerPageLocators.ADD_CUSTOMER_BUTTON)
         return self
-    
+
     @allure.step("Нажать на кнопку 'Add Customer'")
     def click_add_customer_button(self):
         self.find_element(ManagerPageLocators.ADD_CUSTOMER_BUTTON).click()
