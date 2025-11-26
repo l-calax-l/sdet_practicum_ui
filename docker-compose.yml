@@ -8,7 +8,9 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
     ports:
       - "4444:4444"
-    command: ["-conf", "/etc/selenoid/browsers.json", "-limit", "4", "-video-output-dir", "/opt/selenoid/video", "-container-network", "sdet_practicum_ui_default"]
+    command: ["-conf", "/etc/selenoid/browsers.json", "-limit", "4", "-video-output-dir", "/opt/selenoid/video", "-container-network", "ci_network"]
+    networks:
+      - ci_network
 
   tests:
     build: .
@@ -20,3 +22,9 @@ services:
     command: pytest --alluredir=allure-results --junitxml=allure-results/results.xml
     volumes:
       - ./allure-results:/app/allure-results
+    networks:
+      - ci_network
+
+networks:
+  ci_network:
+    name: ci_network
