@@ -115,8 +115,11 @@ def test_delete_customer(driver, base_url):
             len(remaining_names) == len(all_names) - 1
         ), "Количество клиентов не уменьшилось на 1"
 
+
 @allure.title("TC-Fail: Специально падающий тест")
 @allure.description("Тест добавленный для проверки статистики в Email-отчете.")
 @allure.feature("Отладка")
 def test_intentional_fail():
-    assert 1 == 2, "Этот тест упал специально, чтобы в письме появилась цифра 'Упало: 1'"
+    assert (
+        1 == 2
+    ), "Этот тест упал специально, чтобы в письме появилась цифра 'Упало: 1'"
