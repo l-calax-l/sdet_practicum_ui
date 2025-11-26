@@ -106,5 +106,6 @@ allure serve allure-results
   ![Детализация шагов теста](screenshots/report_test_case3.png)
 </details>
 
+
 ---
 **Автор:** Салихов Ильяс
