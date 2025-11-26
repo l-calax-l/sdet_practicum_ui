@@ -19,9 +19,10 @@ services:
       - REMOTE_URL=http://selenoid:4444/wd/hub
     depends_on:
       - selenoid
-    command: pytest --alluredir=allure-results --junitxml=allure-results/results.xml
+    command: pytest --alluredir=allure-results --junitxml=xml-report/results.xml
     volumes:
       - ./allure-results:/app/allure-results
+      - ./xml-report:/app/xml-report
     networks:
       - ci_network
 

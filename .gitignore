@@ -21,6 +21,8 @@ env/
 # Allure reports
 allure-results/
 allure-report/
+xml-report/
+results.xml
 
 # Environment variables file
 .env
