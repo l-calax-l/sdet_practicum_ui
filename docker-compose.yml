@@ -12,6 +12,16 @@ services:
     networks:
       - ci_network
 
+  selenoid-ui:
+    image: aerokube/selenoid-ui:latest-release
+    depends_on:
+      - selenoid
+    ports:
+      - "8080:8080"
+    command: ["--selenoid-uri", "http://selenoid:4444"]
+    networks:
+      - ci_network
+
   tests:
     build: .
     environment:
@@ -19,7 +29,7 @@ services:
       - REMOTE_URL=http://selenoid:4444/wd/hub
     depends_on:
       - selenoid
-    command: pytest --alluredir=allure-results --junitxml=xml-report/results.xml
+    command: pytest -n 3 --alluredir=allure-results --junitxml=xml-report/results.xml
     volumes:
       - ./allure-results:/app/allure-results
       - ./xml-report:/app/xml-report
