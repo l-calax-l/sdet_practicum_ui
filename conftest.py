@@ -24,24 +24,31 @@ def base_url():
 @pytest.fixture(scope="function")
 def driver():
     """
-    Фикстура для подготовки и закрытия браузера перед/после каждого теста.
-    Автоматически управляет версией ChromeDriver.
+    Фикстура для браузера.
+    1. Если есть REMOTE_URL -> подключаемся к Selenoid (Docker).
+    2. Если нет -> запускаем локальный Chrome (как раньше).
     """
     options = webdriver.ChromeOptions()
-
-    if os.getenv("HEADLESS").lower() == "true":
-        options.add_argument("--headless")
-
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--no-proxy-server")
     options.add_argument("--window-size=1920,1080")
 
-    browser = webdriver.Chrome(options=options)
+    remote_url = os.getenv("REMOTE_URL")
 
-    yield browser
+    if remote_url:
+        options.set_capability(
+            "selenoid:options", {"enableVNC": True, "enableVideo": False}
+        )
 
-    browser.quit()
+        driver = webdriver.Remote(command_executor=remote_url, options=options)
+    else:
+        if os.getenv("HEADLESS") == "true":
+            options.add_argument("--headless")
+
+        driver = webdriver.Chrome(options=options)
+
+    yield driver
+    driver.quit()
 
 
 @pytest.fixture(scope="function")
